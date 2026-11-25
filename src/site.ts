@@ -6,16 +6,11 @@ export type Lang = 'vi' | 'en';
 export type Tx = { vi: string; en: string };
 const tx = (vi: string, en: string): Tx => ({ vi, en });
 
-export type IconName =
-  | 'globe' | 'building' | 'handshake' | 'clipboard' | 'gavel' | 'crane' | 'bulb' | 'percent' | 'bank' | 'bolt'
-  | 'users' | 'shield' | 'target' | 'chart' | 'briefcase' | 'star';
-
 export type Item = { title: Tx; text: Tx };
 export type Area = {
   id: string;
   /** Đường dẫn trang chi tiết: /linh-vuc/<vi>/ và /en/practice/<en>/ */
   slug: Tx;
-  icon: IconName;
   title: Tx;
   /** Một câu mô tả trên thẻ ở trang chủ. */
   short: Tx;
@@ -79,55 +74,40 @@ export const site = {
   },
 
   about: {
+    /** 2 đoạn, mỗi đoạn tối đa ~68 ký tự/dòng trên trang. */
     paragraphs: [
       tx(
-        'NP Legal là công ty luật tại Việt Nam, cung cấp giải pháp pháp lý chiến lược cho nhà đầu tư nước ngoài và doanh nghiệp trong nhiều ngành nghề.',
-        'NP Legal is a law firm in Vietnam, providing strategic legal solutions to foreign investors and businesses across a wide range of industries.',
-      ),
-      tx(
-        'Chúng tôi kết hợp chuyên môn pháp lý sâu, chuẩn mực quốc tế và hiểu biết kinh doanh thực tế để tạo ra giá trị thật cho khách hàng.',
-        'We combine deep legal expertise, international standards and practical business understanding to deliver solutions that create real value.',
+        'NP Legal là công ty luật tại Việt Nam, cung cấp giải pháp pháp lý chiến lược cho nhà đầu tư nước ngoài và doanh nghiệp trong nhiều ngành nghề. Chúng tôi kết hợp chuyên môn pháp lý sâu, chuẩn mực quốc tế và hiểu biết kinh doanh thực tế để tạo ra giá trị thật cho khách hàng.',
+        'NP Legal is a law firm in Vietnam, providing strategic legal solutions to foreign investors and businesses across a wide range of industries. We combine deep legal expertise, international standards and practical business understanding to deliver solutions that create real value.',
       ),
       tx(
         'Cam kết của chúng tôi là trở thành đối tác pháp lý tin cậy, đồng hành cùng khách hàng ở mọi giai đoạn đầu tư và kinh doanh tại Việt Nam.',
         'Our commitment is to be a trusted legal partner, accompanying clients at every stage of their investment and business journey in Vietnam.',
       ),
     ],
-    marks: [
-      { icon: 'chart' as IconName, title: tx('Trọng tâm FDI', 'FDI focus'), text: tx('Đầu tư và gia nhập thị trường', 'Investment & market entry expertise') },
-      { icon: 'star' as IconName, title: tx('Luật sư thành viên trực tiếp phụ trách', 'Partner-led service'), text: tx('Luật sư cấp cao tham gia trực tiếp vào hồ sơ', 'Direct senior lawyer involvement') },
-    ],
+    /** Bảng số liệu bên phải mục Giới thiệu. Số người tính tự động từ `team.people`. */
+    founded: tx('[[cần xác nhận]]', '[[to be confirmed]]'), // TODO: năm thành lập – chờ công ty xác nhận
+    languages: tx('Tiếng Việt, tiếng Anh', 'Vietnamese, English'),
   },
 
   message: {
     name: tx('Phạm Đình Thế', 'Pham Dinh The'),
     role: tx('Luật sư điều hành', 'Managing Partner'),
     photo: 'img/team/the-lg.jpg',
-    paragraphs: [
-      tx(
-        'Việt Nam tiếp tục là một trong những điểm đến đầu tư năng động nhất châu Á. Cơ hội nhiều, nhưng nhà đầu tư và doanh nghiệp cũng gặp những thách thức pháp lý, quản lý nhà nước và tuân thủ ngày càng phức tạp.',
-        'Vietnam continues to emerge as one of the most dynamic investment destinations in Asia. While opportunities are abundant, investors and businesses face increasingly complex legal, regulatory and compliance challenges.',
-      ),
-      tx(
-        'Tại NP Legal, chúng tôi kết hợp chuyên môn pháp lý, kinh nghiệm tuân thủ và hiểu biết kinh doanh thực tế để đưa ra giải pháp hợp lý về thương mại và hiệu quả.',
-        'At NP Legal, we combine legal expertise, compliance experience and practical business knowledge to deliver solutions that are commercially sound and effective.',
-      ),
-      tx(
-        'Chúng tôi cam kết là đối tác pháp lý tin cậy, đồng hành cùng khách hàng ở mọi chặng đường và góp phần vào thành công lâu dài của họ tại Việt Nam.',
-        'We are committed to being a trusted legal partner, accompanying our clients at every stage of their journey and contributing to their long-term success in Vietnam.',
-      ),
-    ],
-    values: [
-      { icon: 'handshake' as IconName, title: tx('Lấy khách hàng làm trọng tâm', 'Client-focused'), text: tx('Đặt lợi ích của khách hàng lên trước và xây dựng quan hệ lâu dài.', 'We put our clients’ interests first and build long-term relationships.') },
-      { icon: 'bulb' as IconName, title: tx('Thực tế', 'Practical'), text: tx('Tư vấn thực tế, hướng tới giải pháp, tạo ra giá trị thật.', 'We provide practical and solution-oriented legal advice that creates real value.') },
-      { icon: 'users' as IconName, title: tx('Phản hồi nhanh', 'Responsive'), text: tx('Chủ động, tận tâm và hỗ trợ kịp thời.', 'We are responsive, proactive and dedicated to timely support.') },
-      { icon: 'shield' as IconName, title: tx('Tin cậy', 'Reliable'), text: tx('Chính trực, bảo mật và chuyên nghiệp.', 'We deliver reliable legal services with integrity, confidentiality and professionalism.') },
-    ],
+    /** Câu trích (in nghiêng, lớn) + một đoạn 2 câu. */
+    quote: tx(
+      'Chúng tôi cam kết là đối tác pháp lý tin cậy, đồng hành cùng khách hàng ở mọi chặng đường và góp phần vào thành công lâu dài của họ tại Việt Nam.',
+      'We are committed to being a trusted legal partner, accompanying our clients at every stage of their journey and contributing to their long-term success in Vietnam.',
+    ),
+    text: tx(
+      'Việt Nam tiếp tục là một trong những điểm đến đầu tư năng động nhất châu Á, nhưng nhà đầu tư cũng gặp những thách thức pháp lý và tuân thủ ngày càng phức tạp. Tại NP Legal, chúng tôi kết hợp chuyên môn pháp lý, kinh nghiệm tuân thủ và hiểu biết kinh doanh thực tế để đưa ra giải pháp hợp lý về thương mại và hiệu quả.',
+      'Vietnam continues to emerge as one of the most dynamic investment destinations in Asia, yet investors face increasingly complex legal, regulatory and compliance challenges. At NP Legal, we combine legal expertise, compliance experience and practical business knowledge to deliver solutions that are commercially sound and effective.',
+    ),
   },
 
   areas: [
     {
-      id: 'fdi', slug: tx('dau-tu-nuoc-ngoai', 'foreign-investment'), icon: 'globe',
+      id: 'fdi', slug: tx('dau-tu-nuoc-ngoai', 'foreign-investment'),
       title: tx('Đầu tư nước ngoài & gia nhập thị trường', 'Foreign Investment & Market Entry'),
       short: tx('Giúp nhà đầu tư nước ngoài gia nhập, thành lập và phát triển kinh doanh tại Việt Nam một cách tự tin.', 'Helping foreign investors successfully enter, establish and grow their business in Vietnam with confidence.'),
       detail: {
@@ -150,12 +130,12 @@ export const site = {
       },
     },
     {
-      id: 'corporate', slug: tx('doanh-nghiep-thuong-mai', 'corporate-commercial'), icon: 'building',
+      id: 'corporate', slug: tx('doanh-nghiep-thuong-mai', 'corporate-commercial'),
       title: tx('Doanh nghiệp & thương mại', 'Corporate & Commercial'),
       short: tx('Quản trị doanh nghiệp, hợp đồng, giao dịch thương mại và tư vấn pháp lý thường xuyên.', 'Corporate governance, contracts, commercial transactions and day-to-day legal advisory.'),
     },
     {
-      id: 'ma', slug: tx('mua-ban-sap-nhap', 'mergers-acquisitions'), icon: 'handshake',
+      id: 'ma', slug: tx('mua-ban-sap-nhap', 'mergers-acquisitions'),
       title: tx('Mua bán & sáp nhập (M&A)', 'Mergers & Acquisitions'),
       short: tx('Thẩm định pháp lý, cấu trúc giao dịch, đàm phán và hỗ trợ sau mua bán.', 'Legal due diligence, transaction structuring, negotiations and post-acquisition support.'),
       detail: {
@@ -175,14 +155,14 @@ export const site = {
           { title: tx('Hỗ trợ sau giao dịch', 'Post-transaction support'), text: tx('Hỗ trợ cấp phép, thủ tục với cơ quan quản lý, tái cấu trúc và hội nhập sau giao dịch.', 'Assist with licensing, regulatory filings, restructuring and post-closing integration.') },
         ],
         strengths: [
-          { title: tx('50+ khách hàng', '50+ clients advised'), text: tx('Khách hàng trong nước và quốc tế.', 'Domestic and international clients.') },
+          { title: tx('Kinh nghiệm với khách hàng', 'Client experience'), text: tx('Chúng tôi đã tư vấn cho hơn 50 khách hàng trong nước và quốc tế.', 'We have advised more than 50 domestic and international clients.') },
           { title: tx('Giao dịch xuyên biên giới', 'Cross-border transactions'), text: tx('Nhà đầu tư từ nhiều quốc gia.', 'Investors from many jurisdictions.') },
           { title: tx('Luật sư thành viên phụ trách', 'Partner-led service'), text: tx('Luật sư cấp cao tham gia trực tiếp.', 'Direct senior lawyer involvement.') },
         ],
       },
     },
     {
-      id: 'compliance', slug: tx('tuan-thu-kiem-toan-noi-bo', 'compliance-internal-audit'), icon: 'clipboard',
+      id: 'compliance', slug: tx('tuan-thu-kiem-toan-noi-bo', 'compliance-internal-audit'),
       title: tx('Tuân thủ & kiểm toán nội bộ', 'Compliance & Internal Audit'),
       short: tx('Rà soát tuân thủ, đánh giá rủi ro, điều tra nội bộ và tư vấn quản trị.', 'Compliance reviews, risk assessments, internal investigations and governance advisory.'),
       detail: {
@@ -209,7 +189,7 @@ export const site = {
       },
     },
     {
-      id: 'disputes', slug: tx('giai-quyet-tranh-chap', 'dispute-resolution'), icon: 'gavel',
+      id: 'disputes', slug: tx('giai-quyet-tranh-chap', 'dispute-resolution'),
       title: tx('Giải quyết tranh chấp & tố tụng', 'Dispute Resolution & Litigation'),
       short: tx('Đại diện khách hàng trong tố tụng, trọng tài, hoà giải và thi hành án.', 'Representing clients in litigation, arbitration, mediation and enforcement proceedings.'),
       detail: {
@@ -236,7 +216,7 @@ export const site = {
       },
     },
     {
-      id: 'realestate', slug: tx('bat-dong-san-xay-dung', 'real-estate-construction'), icon: 'crane',
+      id: 'realestate', slug: tx('bat-dong-san-xay-dung', 'real-estate-construction'),
       title: tx('Bất động sản & xây dựng', 'Real Estate & Construction'),
       short: tx('Phát triển dự án, hợp đồng xây dựng, đất đai và giao dịch bất động sản.', 'Project development, construction contracts, land matters and property transactions.'),
       detail: {
@@ -263,7 +243,7 @@ export const site = {
       },
     },
     {
-      id: 'ip', slug: tx('so-huu-tri-tue-cong-nghe', 'intellectual-property-technology'), icon: 'bulb',
+      id: 'ip', slug: tx('so-huu-tri-tue-cong-nghe', 'intellectual-property-technology'),
       title: tx('Sở hữu trí tuệ & công nghệ', 'Intellectual Property & Technology'),
       short: tx('Nhãn hiệu, sáng chế, chuyển giao công nghệ, bảo vệ dữ liệu và thực thi quyền.', 'Trademarks, patents, technology transfer, data protection and enforcement.'),
       detail: {
@@ -290,7 +270,7 @@ export const site = {
       },
     },
     {
-      id: 'tax', slug: tx('thue-hai-quan', 'tax-customs'), icon: 'percent',
+      id: 'tax', slug: tx('thue-hai-quan', 'tax-customs'),
       title: tx('Thuế & hải quan', 'Tax & Customs'),
       short: tx('Thuế doanh nghiệp, GTGT, TNCN, thuế quốc tế, hải quan và hỗ trợ thanh tra, kiểm tra.', 'Corporate tax, VAT, personal income tax, international tax, customs and audit support.'),
       detail: {
@@ -317,12 +297,12 @@ export const site = {
       },
     },
     {
-      id: 'banking', slug: tx('ngan-hang-tai-chinh', 'banking-finance'), icon: 'bank',
+      id: 'banking', slug: tx('ngan-hang-tai-chinh', 'banking-finance'),
       title: tx('Ngân hàng & tài chính', 'Banking & Finance'),
       short: tx('Hỗ trợ tổ chức tài chính, bên cho vay và bên vay trong giao dịch tài chính và vấn đề pháp lý chuyên ngành.', 'Supporting financial institutions, lenders and borrowers in financing transactions and regulatory matters.'),
     },
     {
-      id: 'energy', slug: tx('nang-luong-khoang-san-ha-tang', 'energy-mining-infrastructure'), icon: 'bolt',
+      id: 'energy', slug: tx('nang-luong-khoang-san-ha-tang', 'energy-mining-infrastructure'),
       title: tx('Năng lượng, khoáng sản & hạ tầng', 'Energy, Mining & Infrastructure'),
       short: tx('Tư vấn phát triển dự án, cấp phép, cấu trúc đầu tư và tuân thủ quy định.', 'Advising on project development, licensing, investment structures and regulatory compliance.'),
     },

@@ -30,6 +30,11 @@ for (const r of routes) {
     description: site.seo.description[L], telephone: site.phone, email: site.email,
     address: { '@type': 'PostalAddress', streetAddress: site.address[L], addressLocality: 'Hanoi', addressCountry: 'VN' },
     areaServed: 'VN', knowsLanguage: ['vi', 'en'],
+    // Đội ngũ (mục 8) dưới dạng Person để công cụ tìm kiếm nhận ra luật sư của hãng.
+    employee: site.team.people.map((p) => ({
+      '@type': 'Person', name: p.name[L], jobTitle: p.role[L], image: site.url + p.photo,
+      worksFor: { '@type': 'LegalService', name: site.name, url: site.url },
+    })),
   } : {
     '@context': 'https://schema.org', '@type': 'Service', name: area.title[L], description: area.short[L],
     provider: { '@type': 'LegalService', name: site.name, url: site.url },

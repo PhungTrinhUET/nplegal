@@ -13,6 +13,10 @@ Host trên GitHub Pages, build bằng GitHub Actions mỗi lần push nhánh `ma
 Nội dung nằm ở các file sau:
 
 - **`src/site.ts`**: liên hệ, số liệu, giới thiệu, thông điệp, 10 lĩnh vực (lĩnh vực nào có `detail` thì có trang riêng), đội ngũ. Mỗi đoạn chữ có cả `vi` và `en`.
+  - `about.founded`: năm thành lập (đang là `[[cần xác nhận]]`); ô "Luật sư & chuyên gia" tự đếm từ `team.people`.
+  - `message.quote` (câu trích in nghiêng) và `message.text` (2 câu); ảnh `message.photo`.
+  - `team.people`: 3 người đầu hiện ảnh lớn 4:5 (luật sư thành viên), số còn lại ảnh vuông 96px. Ảnh lớn nên ≥ 560×700px; ảnh hiện tại chỉ khoảng 215px nên bị giới hạn rộng 280px.
+  - Đội ngũ cũng được xuất thành JSON-LD `Person` (`employee`) trên trang chủ, do `scripts/prerender.mjs` tạo.
 - `src/ui.ts`: chữ cố định của menu, nút và form.
 - `public/img/`: ảnh. Ảnh đội ngũ ở `team/`, đặt cùng tên file để thay.
 - Đầu `src/styles.css`: màu và font.

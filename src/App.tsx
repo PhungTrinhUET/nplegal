@@ -72,40 +72,30 @@ function LangLinks({ c, sep }: { c: Ctx; sep: ReactNode }) {
   );
 }
 
-function SecHead({ eyebrow, title, lead, center }: { eyebrow: string; title: string; lead?: string; center?: boolean }) {
-  return (
-    <div className={`sec__head${center ? ' sec__head--c' : ''}`}>
-      <p className="eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
-      {lead && <p className="sec__lead">{lead}</p>}
-    </div>
-  );
-}
-
 const n2 = (i: number) => String(i + 1).padStart(2, '0');
 
-/** Danh sách kẻ dòng: số thứ tự – tiêu đề – mô tả (kiểu trang các hãng luật lớn, không icon). */
-function Rows({ items, c, numbered = true }: { items: { title: Tx; text: Tx }[]; c: Ctx; numbered?: boolean }) {
+/** Danh sách kẻ dòng: số thứ tự serif – tiêu đề – một câu (không icon). */
+function Steps({ items, c, numbered = true }: { items: { title: Tx; text: Tx }[]; c: Ctx; numbered?: boolean }) {
   return (
-    <ol className={`rows${numbered ? '' : ' rows--plain'}`}>
+    <ol className={`steps${numbered ? '' : ' steps--plain'}`}>
       {items.map((s, i) => (
-        <li key={i}>{numbered && <span className="rows__n">{n2(i)}</span>}<h3>{c.t(s.title)}</h3><p>{c.t(s.text)}</p></li>
+        <li key={i}>{numbered && <span className="steps__n" aria-hidden="true">{n2(i)}</span>}<div><h3>{c.t(s.title)}</h3><p>{c.t(s.text)}</p></div></li>
       ))}
     </ol>
   );
 }
 
+/** 10 lĩnh vực, 2 cột; lĩnh vực có trang riêng là link (hover: tên màu nhấn + mũi tên), còn lại là chữ thường. */
 function AreaList({ c, except }: { c: Ctx; except?: string }) {
+  const list = site.areas.filter((a) => a.id !== except);
   return (
-    <ul className="plist">
-      {site.areas.filter((a) => a.id !== except).map((a) => (
-        <li key={a.id}>
-          {a.detail
-            ? <a href={linkTo(c.r, { lang: c.L, page: 'area', id: a.id })}><h3>{c.t(a.title)}</h3><p>{c.t(a.short)}</p><span className="plist__go" aria-hidden="true">→</span></a>
-            : <div><h3>{c.t(a.title)}</h3><p>{c.t(a.short)}</p></div>}
-        </li>
-      ))}
-    </ul>
+    <ol className="areas">
+      {list.map((a) => {
+        const body = <><span className="areas__n" aria-hidden="true">{n2(site.areas.indexOf(a))}</span>
+          <span className="areas__body"><h3>{c.t(a.title)}{a.detail && <span className="areas__go" aria-hidden="true"> →</span>}</h3><p>{c.t(a.short)}</p></span></>;
+        return <li key={a.id}>{a.detail ? <a href={linkTo(c.r, { lang: c.L, page: 'area', id: a.id })}>{body}</a> : <div>{body}</div>}</li>;
+      })}
+    </ol>
   );
 }
 
@@ -138,124 +128,137 @@ function Home({ c }: { c: Ctx }) {
         </div>
       </section>
 
-      <section id="about" className="sec">
-        <div className="wrap">
-          <div className="about">
-            <SecHead eyebrow={u.aboutEyebrow} title={u.aboutTitle} />
-            <div className="prose">{site.about.paragraphs.map((p, i) => <p key={i}>{t(p)}</p>)}</div>
+      <section id={ids.about} className="sec" aria-labelledby="about-h">
+        <div className="wrap about">
+          <div className="about__text">
+            <h2 id="about-h">{u.aboutTitle}</h2>
+            {site.about.paragraphs.map((p, i) => <p key={i}>{t(p)}</p>)}
           </div>
-          <ul className="values">
-            {site.message.values.map((v, i) => <li key={i}><h3>{t(v.title)}</h3><p>{t(v.text)}</p></li>)}
-          </ul>
+          <dl className="facts">
+            <div><dt>{u.facts.founded}</dt><dd>{t(site.about.founded)}</dd></div>
+            <div><dt>{u.facts.people}</dt><dd>{site.team.people.length}</dd></div>
+            <div><dt>{u.facts.languages}</dt><dd>{t(site.about.languages)}</dd></div>
+          </dl>
         </div>
       </section>
 
-      <section className="msg" aria-labelledby="msg-h">
+      <section id={ids.practices} className="sec sec--sage" aria-labelledby="practices-h">
+        <div className="wrap">
+          <div className="sec__head">
+            <h2 id="practices-h">{u.practicesTitle}</h2>
+            <p className="sec__lead">{u.practicesLead}</p>
+          </div>
+          <AreaList c={c} />
+        </div>
+      </section>
+
+      <section className="msg" aria-label={u.msgLabel}>
         <div className="wrap msg__in">
           <figure className="msg__photo">
             <img src={asset(r, site.message.photo)} alt={t(site.message.name)} width={508} height={650} loading="lazy" />
           </figure>
           <div className="msg__text">
-            <p className="eyebrow eyebrow--light" id="msg-h">{u.msgEyebrow}</p>
-            {site.message.paragraphs.map((p, i) => <p key={i}>{t(p)}</p>)}
-            <p className="msg__sign"><strong>{t(site.message.name)}</strong><span>{t(site.message.role)}</span></p>
+            <blockquote className="msg__quote"><p>{t(site.message.quote)}</p></blockquote>
+            <p>{t(site.message.text)}</p>
+            <p className="msg__sign"><span className="msg__name">{t(site.message.name)}</span><span className="msg__role">{t(site.message.role)}</span></p>
           </div>
         </div>
       </section>
 
-      <section id="practices" className="sec sec--tint">
-        <div className="wrap">
-          <SecHead eyebrow={u.practicesEyebrow} title={u.practicesTitle} lead={u.practicesLead} />
-          <AreaList c={c} />
-        </div>
-      </section>
-
-      <section id="approach" className="sec">
+      <section id={ids.approach} className="sec" aria-labelledby="approach-h">
         <div className="wrap split">
-          <div>
-            <SecHead eyebrow={u.approachEyebrow} title={u.approachTitle} />
-            <div className="prose">{fdi.detail!.intro.map((p, i) => <p key={i}>{t(p)}</p>)}</div>
-            <a className="link-more" href={linkTo(r, { lang: L, page: 'area', id: 'fdi' })}>{t(fdi.title)} →</a>
+          <div className="split__head">
+            <h2 id="approach-h">{u.approachTitle}</h2>
+            <p className="sec__lead">{t(fdi.detail!.intro[1])}</p>
+            <a className="more" href={linkTo(r, { lang: L, page: 'area', id: 'fdi' })}>{u.approachLink} <span aria-hidden="true">→</span></a>
           </div>
-          <Rows items={fdi.detail!.services} c={c} />
+          <Steps items={fdi.detail!.services} c={c} />
         </div>
       </section>
 
-      <section id={ids.team} className="sec sec--tint">
+      <section id={ids.team} className="sec sec--rule" aria-labelledby="team-h">
         <div className="wrap">
-          <SecHead eyebrow={u.teamEyebrow} title={u.teamTitle} lead={t(site.team.intro[0])} />
-          <div className="team">
-            {site.team.people.map((p) => (
-              <article key={p.photo} className="person">
-                <img className="person__photo" src={asset(r, p.photo)} alt={t(p.name)} width={215} height={230} loading="lazy" />
-                <div className="person__body">
-                  <h3>{t(p.name)}</h3>
-                  <p className="person__role">{t(p.role)}</p>
-                  <ul className="person__creds">
-                    {p.creds.map((k) => <li key={k}>{t(site.creds[k])}</li>)}
-                  </ul>
-                  {p.bio && <details className="person__bio"><summary>{u.bio}</summary><p>{t(p.bio)}</p></details>}
-                </div>
-              </article>
-            ))}
+          <div className="sec__head">
+            <h2 id="team-h">{u.teamTitle}</h2>
+            <p className="sec__lead">{t(site.team.intro[0])}</p>
           </div>
-          <p className="team__note">{t(site.team.intro[1])}</p>
+          <div className="team team--lead">{site.team.people.slice(0, 3).map((p) => <Person key={p.photo} p={p} c={c} />)}</div>
+          <div className="team team--rest">{site.team.people.slice(3).map((p) => <Person key={p.photo} p={p} c={c} />)}</div>
         </div>
       </section>
+
+      {hasPubs && (
+        <section id={ids.publications} className="sec sec--sage" aria-labelledby="pubs-h">
+          <div className="wrap pubs">
+            <h2 id="pubs-h">{u.pubsTitle[0]}<br />{u.pubsTitle[1]}</h2>
+            <ul className="pubs__list">
+              {site.publications.map((p, i) => (
+                <li key={i}>
+                  <h3>{p.href ? <a href={p.href}>{t(p.title)} <span aria-hidden="true">→</span></a> : <>{t(p.title)} <span className="pubs__go" aria-hidden="true">→</span></>}</h3>
+                  <p>{t(p.text)}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <Contact c={c} />
     </>
   );
 }
 
+type Person = (typeof site.team.people)[number];
+function Person({ p, c }: { p: Person; c: Ctx }) {
+  const { r, t } = c;
+  return (
+    <article className="person">
+      <img className="person__photo" src={asset(r, p.photo)} alt={t(p.name)} width={215} height={230} loading="lazy" />
+      <div className="person__body">
+        <h3>{t(p.name)}</h3>
+        <p className="person__role">{t(p.role)}</p>
+        <ul className="person__creds">{p.creds.map((k) => <li key={k}>{t(site.creds[k])}</li>)}</ul>
+        {p.bio && <p className="person__bio">{t(p.bio)}</p>}
+      </div>
+    </article>
+  );
+}
+
+/** Trang lĩnh vực: một cột bài viết rộng tối đa 68ch. */
 function AreaPage({ c, a }: { c: Ctx; a: Area }) {
   const { r, L, t, u } = c;
   const d = a.detail!;
   return (
     <>
-      <section className="phero">
-        <div className="wrap phero__in">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <a href={linkTo(r, home(L))}>{u.home}</a><span aria-hidden="true">/</span>
-            <a href={linkTo(r, home(L), 'practices')}>{u.nav.practices}</a>
-          </nav>
-          <h1>{t(a.title)}</h1>
-          <p className="tagline">{t(d.tagline)}</p>
-          <div className="phero__intro">{d.intro.map((p, i) => <p key={i}>{t(p)}</p>)}</div>
-          <a href={linkTo(r, home(L), 'contact')} className="btn btn--solid">{u.cta}</a>
-        </div>
-      </section>
-
-      {d.pillars.length > 0 && (
-        <section className="sec">
-          <div className="wrap">
-            <SecHead eyebrow={u.ourApproach} title={t(a.title)} />
-            <div className="pillars">
-              {d.pillars.map((p, i) => <article key={i}><h3>{t(p.title)}</h3><p>{t(p.text)}</p></article>)}
-            </div>
-          </div>
-        </section>
-      )}
-
-      <section className={`sec${d.pillars.length ? ' sec--tint' : ''}`}>
+      <article className="sec article" aria-labelledby="area-h">
         <div className="wrap">
-          <SecHead eyebrow={u.services} title={d.steps ? u.approachTitle : t(a.title)} />
-          <Rows items={d.services} c={c} />
-        </div>
-      </section>
+          <div className="article__col">
+            <nav className="crumbs" aria-label="Breadcrumb">
+              <a href={linkTo(r, home(L))}>{u.home}</a><span aria-hidden="true">/</span>
+              <a href={linkTo(r, home(L), ids.practices)}>{u.nav.practices}</a>
+            </nav>
+            <h1 id="area-h">{t(a.title)}</h1>
+            <p className="article__tagline">{t(d.tagline)}</p>
+            {d.intro.map((p, i) => <p key={i}>{t(p)}</p>)}
+            <a href={linkTo(r, home(L), ids.contact)} className="btn btn--solid article__cta">{u.cta}</a>
 
-      {d.strengths.length > 0 && (
-        <section className="sec">
-          <div className="wrap">
-            <SecHead eyebrow={u.whyUs} title={L === 'vi' ? 'Điểm mạnh của chúng tôi' : 'Our strengths'} />
-            <Rows items={d.strengths} c={c} numbered={false} />
+            {d.pillars.length > 0 && <>
+              <h2>{u.ourApproach}</h2>
+              <Steps items={d.pillars} c={c} numbered={false} />
+            </>}
+            <h2>{d.steps ? u.approachTitle : u.services}</h2>
+            <Steps items={d.services} c={c} />
+            {d.strengths.length > 0 && <>
+              <h2>{u.whyUs}</h2>
+              <Steps items={d.strengths} c={c} numbered={false} />
+            </>}
           </div>
-        </section>
-      )}
+        </div>
+      </article>
 
-      <section className="sec sec--tint">
+      <section className="sec sec--rule" aria-labelledby="other-h">
         <div className="wrap">
-          <SecHead eyebrow={u.otherAreas} title={L === 'vi' ? 'Lĩnh vực khác' : 'Other practice areas'} />
+          <div className="sec__head"><h2 id="other-h">{u.otherAreas}</h2></div>
           <AreaList c={c} except={a.id} />
         </div>
       </section>
@@ -266,32 +269,24 @@ function AreaPage({ c, a }: { c: Ctx; a: Area }) {
 }
 
 function Contact({ c }: { c: Ctx }) {
-  const { r, L, t, u } = c;
+  const { L, t, u } = c;
   return (
-    <>
-      <section className="band">
-        <img src={asset(r, 'img/office.jpg')} alt="" width={669} height={865} loading="lazy" />
-        <div className="wrap band__in">
-          <h2>{u.ctaBandTitle}</h2>
-          <p className="tagline">{t(site.contact.lead)}</p>
+    <section id={ids.contact} className="sec sec--rule" aria-labelledby="contact-h">
+      <div className="wrap contact">
+        <div className="contact__info">
+          <h2 id="contact-h">{u.contactTitle}</h2>
+          <p className="sec__lead">{t(site.contact.lead)}</p>
+          <dl className="facts facts--contact">
+            <div><dt>{u.phone}</dt><dd><a href={`tel:${tel}`}>{site.phone}</a></dd></div>
+            <div><dt>{u.email}</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+            <div><dt>{u.address}</dt><dd>{t(site.address)}</dd></div>
+            <div><dt>{u.hours}</dt><dd>{t(site.hours)}</dd></div>
+          </dl>
+          {site.mapEmbed && <iframe className="map" title={L === 'vi' ? 'Bản đồ văn phòng NP Legal' : 'Map to NP Legal office'} src={site.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />}
         </div>
-      </section>
-      <section id="contact" className="sec">
-        <div className="wrap contact">
-          <div className="contact__info">
-            <SecHead eyebrow={u.contactEyebrow} title={u.contactTitle} />
-            <dl className="contact__list">
-              <div><dt>{u.phone}</dt><dd><a href={`tel:${tel}`}>{site.phone}</a></dd></div>
-              <div><dt>{u.email}</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
-              <div><dt>{u.address}</dt><dd>{t(site.address)}</dd></div>
-              <div><dt>{u.hours}</dt><dd>{t(site.hours)}</dd></div>
-            </dl>
-            {site.mapEmbed && <iframe className="map" title={L === 'vi' ? 'Bản đồ văn phòng NP Legal' : 'Map to NP Legal office'} src={site.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />}
-          </div>
-          <ContactForm c={c} />
-        </div>
-      </section>
-    </>
+        <ContactForm c={c} />
+      </div>
+    </section>
   );
 }
 
