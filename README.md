@@ -17,6 +17,8 @@ Nội dung nằm ở các file sau:
 - `public/img/`: ảnh. Ảnh đội ngũ ở `team/`, đặt cùng tên file để thay.
 - Đầu `src/styles.css`: màu và font.
 
+**Ấn phẩm** (`publications` trong `src/site.ts`): danh sách trống thì ẩn cả mục trên trang chủ lẫn mục "Ấn phẩm" trên menu. ⚠ Nhánh `redesign` đang có 3 bài tiêu đề "[MẪU]" chỉ để duyệt bố cục: phải đặt lại `publications: []` (hoặc thay bằng bài thật) trước khi merge vào `master`. Không merge khi còn bài mẫu.
+
 Mục giấy phép (`legal.license`) và mã số thuế (`legal.taxCode`) chỉ hiện ở chân trang khi đã điền.
 
 ```bash
