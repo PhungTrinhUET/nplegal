@@ -1,13 +1,23 @@
-# Website công ty luật
+# Website NP Legal
 
-Trang giới thiệu một trang (lĩnh vực, quy trình, đội ngũ, hỏi đáp, liên hệ), không cần đăng nhập, không cần máy chủ.
-Vite + React + TypeScript; khi build, nội dung được dựng sẵn thành HTML để Google và Zalo/Facebook đọc được.
+Website giới thiệu công ty luật NP Legal, song ngữ Việt/Anh, dựng theo hồ sơ năng lực (xanh rừng, nâu đồng, logo NP LEGAL). Không cần đăng nhập, không cần máy chủ.
+Vite + React + TypeScript; khi build, mỗi trang được dựng sẵn thành một file HTML riêng để Google và Zalo/Facebook đọc được:
+
+- Trang chủ: `/` (tiếng Việt) và `/en/` (tiếng Anh).
+- 7 trang lĩnh vực: `/linh-vuc/<slug>/` và `/en/practice/<slug>/`.
+- Cùng với `404.html`, `sitemap.xml` (có hreflang vi/en) và `robots.txt`.
 Host miễn phí trên GitHub Pages, build bằng GitHub Actions mỗi lần push nhánh `master`.
 
 ## Sửa nội dung
 
-Toàn bộ chữ nằm ở **`src/site.ts`**: tên công ty, điện thoại, Zalo, email, địa chỉ, giờ làm việc, lĩnh vực, quy trình, luật sư, hỏi đáp, thông tin giấy phép ở chân trang.
-Giá trị hiện tại là **mẫu**, phải thay trước khi công khai. Màu và font ở đầu `src/styles.css`.
+Nội dung nằm ở các file sau:
+
+- **`src/site.ts`**: liên hệ, số liệu, giới thiệu, thông điệp, 10 lĩnh vực (lĩnh vực nào có `detail` thì có trang riêng), đội ngũ. Mỗi đoạn chữ có cả `vi` và `en`.
+- `src/ui.ts`: chữ cố định của menu, nút và form.
+- `public/img/`: ảnh. Ảnh đội ngũ ở `team/`, đặt cùng tên file để thay.
+- Đầu `src/styles.css`: màu và font.
+
+Mục giấy phép (`legal.license`) và mã số thuế (`legal.taxCode`) chỉ hiện ở chân trang khi đã điền.
 
 ```bash
 npm install
@@ -31,7 +41,7 @@ Từ đó mỗi lần sửa `src/site.ts` rồi push là web tự cập nhật.
    - `www` → bản ghi **CNAME** trỏ `<tài-khoản>.github.io`
    - tên miền gốc `@` → 4 bản ghi **A**: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
 3. Chờ DNS cập nhật (vài phút đến vài giờ), quay lại trang Pages tick **Enforce HTTPS**.
-4. Sửa `url` trong `src/site.ts` thành `https://www.ten-mien.vn/` (dùng cho sitemap và link chia sẻ) rồi push.
+4. Kiểm tra `url` trong `src/site.ts` (đang là `https://www.nplegal.vn/`) (dùng cho sitemap và link chia sẻ) rồi push.
 
 ## Form liên hệ (miễn phí, không máy chủ)
 

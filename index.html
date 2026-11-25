@@ -1,22 +1,25 @@
 <!doctype html>
-<html lang="vi">
+<html lang="%LANG%">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>%TITLE%</title>
     <meta name="description" content="%DESC%" />
     <link rel="canonical" href="%URL%" />
+    <!--alternates-->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NP Legal" />
     <meta property="og:title" content="%TITLE%" />
     <meta property="og:description" content="%DESC%" />
     <meta property="og:url" content="%URL%" />
-    <meta property="og:locale" content="vi_VN" />
-    <meta name="theme-color" content="#16233a" />
+    <meta property="og:image" content="%OGIMG%" />
+    <meta property="og:locale" content="%LOCALE%" />
+    <meta name="theme-color" content="#0f3d2a" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <!--jsonld-->
   </head>
   <body>
-    <div id="root"><!--app--></div>
+    <div id="root"%ROUTE%><!--app--></div>
     <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>
