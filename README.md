@@ -13,7 +13,7 @@ Host trên GitHub Pages, build bằng GitHub Actions mỗi lần push nhánh `ma
 Nội dung nằm ở các file sau:
 
 - **`src/site.ts`**: liên hệ, số liệu, giới thiệu, thông điệp, 10 lĩnh vực (lĩnh vực nào có `detail` thì có trang riêng), đội ngũ. Mỗi đoạn chữ có cả `vi` và `en`.
-  - `about.founded`: năm thành lập (đang là `[[cần xác nhận]]`); ô "Luật sư & chuyên gia" tự đếm từ `team.people`.
+  - `about.founded`: năm thành lập (đang là 2016, theo ước lượng của công ty); ô "Luật sư & chuyên gia" tự đếm từ `team.people`.
   - `message.quote` (câu trích in nghiêng) và `message.text` (2 câu); ảnh `message.photo`.
   - `team.people`: 3 người đầu hiện ảnh lớn 4:5 (luật sư thành viên), số còn lại ảnh vuông 96px. Ảnh lớn nên ≥ 560×700px; ảnh hiện tại chỉ khoảng 215px nên bị giới hạn rộng 280px.
   - Đội ngũ cũng được xuất thành JSON-LD `Person` (`employee`) trên trang chủ, do `scripts/prerender.mjs` tạo.
@@ -21,7 +21,7 @@ Nội dung nằm ở các file sau:
 - `public/img/`: ảnh. Ảnh đội ngũ ở `team/`, đặt cùng tên file để thay.
 - Đầu `src/styles.css`: màu và font.
 
-**Ấn phẩm** (`publications` trong `src/site.ts`): danh sách trống thì ẩn cả mục trên trang chủ lẫn mục "Ấn phẩm" trên menu. ⚠ Nhánh `redesign` đang có 3 bài tiêu đề "[MẪU]" chỉ để duyệt bố cục: phải đặt lại `publications: []` (hoặc thay bằng bài thật) trước khi merge vào `master`. Không merge khi còn bài mẫu.
+**Ấn phẩm** (`publications` trong `src/site.ts`): danh sách trống (hiện tại) thì ẩn cả mục trên trang chủ lẫn mục "Ấn phẩm" trên menu và chân trang. Thêm bài theo mẫu trong chú thích phía trên.
 
 Mục giấy phép (`legal.license`) và mã số thuế (`legal.taxCode`) chỉ hiện ở chân trang khi đã điền.
 

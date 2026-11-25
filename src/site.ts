@@ -86,7 +86,7 @@ export const site = {
       ),
     ],
     /** Bảng số liệu bên phải mục Giới thiệu. Số người tính tự động từ `team.people`. */
-    founded: tx('[[cần xác nhận]]', '[[to be confirmed]]'), // TODO: năm thành lập – chờ công ty xác nhận
+    founded: tx('2016', '2016'), // năm ước lượng theo công ty ("khoảng 2016"); sửa khi có năm chính xác
     languages: tx('Tiếng Việt, tiếng Anh', 'Vietnamese, English'),
   },
 
@@ -364,17 +364,7 @@ export const site = {
    *   { date: '2026-09-01', area: 'compliance', title: tx('Bảo vệ dữ liệu cá nhân: nghĩa vụ của doanh nghiệp có vốn nước ngoài', 'Personal data protection: obligations for foreign-invested companies'),
    *     text: tx('Tóm tắt một câu.', 'One-sentence summary.'), href: '' },
    */
-  // ⚠ BÀI MẪU chỉ để duyệt bố cục trên nhánh `redesign`. PHẢI đặt lại `publications: []` (hoặc bài thật) TRƯỚC KHI MERGE VÀO MASTER.
   publications: [
-    { date: '', area: 'fdi', href: '',
-      title: tx('[MẪU] Nghị định mới về đầu tư nước ngoài: điểm cần lưu ý', '[SAMPLE] New decree on foreign investment: key points'),
-      text: tx('Đoạn mô tả mẫu cho bài cập nhật pháp luật. Nội dung thật sẽ do luật sư phụ trách viết.', 'Sample summary for a legal update. The real text will be written by the responsible lawyer.') },
-    { date: '', area: 'tax', href: '',
-      title: tx('[MẪU] Thay đổi về thuế thu nhập doanh nghiệp: doanh nghiệp FDI cần chuẩn bị gì', '[SAMPLE] Corporate income tax changes: what FDI companies should prepare'),
-      text: tx('Đoạn mô tả mẫu cho bài cập nhật pháp luật. Nội dung thật sẽ do luật sư phụ trách viết.', 'Sample summary for a legal update. The real text will be written by the responsible lawyer.') },
-    { date: '', area: 'compliance', href: '',
-      title: tx('[MẪU] Bảo vệ dữ liệu cá nhân: nghĩa vụ của doanh nghiệp có vốn nước ngoài', '[SAMPLE] Personal data protection: obligations for foreign-invested companies'),
-      text: tx('Đoạn mô tả mẫu cho bài cập nhật pháp luật. Nội dung thật sẽ do luật sư phụ trách viết.', 'Sample summary for a legal update. The real text will be written by the responsible lawyer.') },
   ] as { date: string; area: string; title: Tx; text: Tx; href: string }[],
 
   contact: {
