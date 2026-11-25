@@ -16,8 +16,8 @@
   --accent: #c84e1c; --accent-hover: #a63f14; --accent-text: #b8451a; --accent-on-dark: #e8743f; --on-accent: #fff;
   --brand-green: #0f3d2a; /* chỉ favicon / ô logo */
   --surface-dark: #1b1f1c; --on-dark: #eef0ec; --on-dark-muted: #b7bcb6; --on-dark-line: rgba(255, 255, 255, .12);
-  --f-display: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display: "Noto Serif", Georgia, "Times New Roman", serif;
+  --f-body: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --r: 0; --wrap: 1240px; --gutter: 24px; --nav-h: 64px;
   --sec: clamp(4rem, 8vw, 7rem);
   color-scheme: light;
