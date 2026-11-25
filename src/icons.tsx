@@ -33,12 +33,7 @@ export function Icon({ name, size }: { name: string; size?: number }) {
   );
 }
 
-/** Logo NP LEGAL dựng bằng HTML/CSS theo hồ sơ năng lực (ô vuông viền, chữ NP, dải LEGAL). */
-export function Logo({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
-  return (
-    <span className={`logo logo--${tone}`} aria-hidden="true">
-      <span className="logo__np">NP</span>
-      <span className="logo__legal">LEGAL</span>
-    </span>
-  );
+/** Wordmark "NP Legal" bằng chữ serif; "Legal" màu nhấn. Ô logo xanh chỉ còn ở favicon. */
+export function Wordmark() {
+  return <span className="wordmark">NP <span>Legal</span></span>;
 }

@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import '@fontsource/be-vietnam-pro/vietnamese-400.css';
-import '@fontsource/be-vietnam-pro/latin-400.css';
-import '@fontsource/be-vietnam-pro/vietnamese-500.css';
-import '@fontsource/be-vietnam-pro/latin-500.css';
+import '@fontsource/ibm-plex-sans/vietnamese-400.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/vietnamese-500.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
 import '@fontsource/source-serif-4/vietnamese-500.css';
 import '@fontsource/source-serif-4/latin-500.css';
 import '@fontsource/source-serif-4/vietnamese-600.css';
