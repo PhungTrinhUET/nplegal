@@ -6,7 +6,7 @@ Vite + React + TypeScript; khi build, mỗi trang được dựng sẵn thành m
 - Trang chủ: `/` (tiếng Việt) và `/en/` (tiếng Anh).
 - 7 trang lĩnh vực: `/linh-vuc/<slug>/` và `/en/practice/<slug>/`.
 - Cùng với `404.html`, `sitemap.xml` (có hreflang vi/en) và `robots.txt`.
-Host miễn phí trên GitHub Pages, build bằng GitHub Actions mỗi lần push nhánh `master`.
+Host trên GitHub Pages, build bằng GitHub Actions mỗi lần push nhánh `master`.
 
 ## Sửa nội dung
 
@@ -25,7 +25,7 @@ npm run dev       # xem thử ở http://localhost:5173
 npm run build     # ra dist/ (giống bản GitHub Actions build)
 ```
 
-## Đưa lên mạng (0 đồng)
+## Đưa lên mạng
 
 1. Tạo repo **công khai** trống trên GitHub (không tick README), ví dụ `lawweb`.
 2. Push mã: `git remote add origin git@github.com:<tài-khoản>/lawweb.git && git push -u origin master`
@@ -43,7 +43,7 @@ Từ đó mỗi lần sửa `src/site.ts` rồi push là web tự cập nhật.
 3. Chờ DNS cập nhật (vài phút đến vài giờ), quay lại trang Pages tick **Enforce HTTPS**.
 4. Kiểm tra `url` trong `src/site.ts` (đang là `https://www.nplegal.vn/`) (dùng cho sitemap và link chia sẻ) rồi push.
 
-## Form liên hệ (miễn phí, không máy chủ)
+## Form liên hệ (không cần máy chủ)
 
 Mặc định nút "Gửi yêu cầu tư vấn" mở ứng dụng email của khách với nội dung điền sẵn.
 Muốn thư về thẳng hộp mail công ty: đăng ký **Web3Forms** (web3forms.com, nhập email công ty → nhận access key, 250 thư/tháng)
@@ -53,15 +53,7 @@ rồi điền vào `web3formsKey` trong `src/site.ts`. Hoặc dùng Formspree (`
 
 Sau khi có tên miền: vào Google Search Console → thêm tên miền → gửi `sitemap.xml`. Tạo thêm hồ sơ **Google Business Profile** (miễn phí) để hiện trên Google Maps.
 
-## Chi phí
+## Lưu ý
 
-| Phần | Dùng | Chi phí |
-|---|---|---|
-| Host + HTTPS | GitHub Pages | 0 đ |
-| Build | GitHub Actions (repo công khai) | 0 đ |
-| Form liên hệ | Web3Forms / Formspree gói free | 0 đ |
-| Bản đồ | Google Maps nhúng (không cần API key) | 0 đ |
-| Tên miền | đã có | phí gia hạn hằng năm |
-
-Lưu ý: GitHub Pages gói free yêu cầu repo công khai (ai cũng xem được mã nguồn và nội dung). Đừng để mật khẩu hay thông tin khách hàng trong repo.
-Nội dung quảng cáo dịch vụ luật sư cần tuân thủ Luật Luật sư và Quy tắc đạo đức nghề nghiệp luật sư (không cam kết kết quả, không tự nhận "tốt nhất").
+- GitHub Pages gói free yêu cầu repo công khai (ai cũng xem được mã nguồn và nội dung). Đừng để mật khẩu hay thông tin khách hàng trong repo.
+- Nội dung quảng cáo dịch vụ luật sư cần tuân thủ Luật Luật sư và Quy tắc đạo đức nghề nghiệp luật sư (không cam kết kết quả, không tự nhận "tốt nhất").
