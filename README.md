@@ -21,6 +21,16 @@ Nội dung nằm ở các file sau:
 
 Mục giấy phép (`legal.license`) và mã số thuế (`legal.taxCode`) chỉ hiện ở chân trang khi đã điền.
 
+### Ảnh hero
+
+`public/img/hero.jpg` hiện là **ảnh tạm** (ảnh dọc 468×941, bị phóng to nên mờ ở màn hình lớn). Cần ảnh thật:
+
+- Hà Nội lúc hoàng hôn, **khổ ngang, rộng ≥ 2400px**.
+- Trời tối ở nửa trên; vùng trái-dưới ít chi tiết để đặt chữ.
+- Xuất thêm bản rộng 1200px cho điện thoại, gắn vào thẻ `<img>` của hero qua `srcset` (trong `src/App.tsx`).
+
+Sau khi thay: đo lại tương phản chữ trắng trên ảnh ở 900–1239px. Nếu đạt ≥ 4.5:1 thì hạ lớp tối tạm (`--hero-shade` trong khối `@media (min-width: 900px)` của `src/styles.css`, có ghi TODO) về giới hạn ban đầu: tối đa 60% ở góc có chữ, về 0% ở giữa ảnh. Dưới 900px chữ nằm trên nền tối riêng, không đè lên ảnh.
+
 ```bash
 npm install
 npm run dev       # xem thử ở http://localhost:5173
