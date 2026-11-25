@@ -70,29 +70,13 @@ export const site = {
 
   hero: {
     title: tx('Tư vấn pháp lý cho nhà đầu tư nước ngoài tại Việt Nam', 'Legal counsel for foreign investors in Vietnam'),
-    lead: tx(
-      'Kết hợp chuyên môn pháp lý, kinh nghiệm tuân thủ và hiểu biết kinh doanh thực tế để đưa ra giải pháp hợp lý về thương mại và hiệu quả.',
-      'We combine legal expertise, compliance experience and practical business knowledge to deliver solutions that are commercially sound and effective.',
-    ),
-    quote: tx(
-      'Giải pháp pháp lý chiến lược, chính trực, hiệu quả và tận tâm vì thành công của khách hàng.',
-      'Delivering strategic legal solutions with integrity, efficiency and a commitment to your success.',
-    ),
-    /** 4 mảng nổi bật dưới tiêu đề; trỏ tới id lĩnh vực. */
-    pillars: [
-      { area: 'fdi', label: tx('Đầu tư nước ngoài & M&A', 'Foreign Investment & M&A') },
-      { area: 'corporate', label: tx('Tư vấn doanh nghiệp & thương mại', 'Corporate Advisory & Commercial') },
-      { area: 'compliance', label: tx('Tuân thủ & kiểm toán nội bộ', 'Compliance & Internal Audit') },
-      { area: 'disputes', label: tx('Giải quyết tranh chấp', 'Dispute Resolution') },
+    /** 3 ô tối bên phải hero: nhãn ngắn + một câu. Không ghi số chưa có nguồn. */
+    facts: [
+      { label: tx('Văn phòng', 'Office'), text: tx('Hà Nội — Zen Tower, Thanh Xuân', 'Hanoi — Zen Tower, Thanh Xuan') },
+      { label: tx('Khách hàng', 'Clients'), text: tx('Hơn 50 khách hàng từ hơn 10 quốc gia', 'More than 50 clients from over 10 countries') },
+      { label: tx('Cách làm việc', 'How we work'), text: tx('Luật sư thành viên trực tiếp phụ trách hồ sơ', 'A partner personally leads every matter') },
     ],
   },
-
-  stats: [
-    { n: '10+', label: tx('Năm kinh nghiệm', 'Years'), note: tx('tổng kinh nghiệm nghề nghiệp', 'combined professional experience') },
-    { n: '50+', label: tx('Khách hàng', 'Clients'), note: tx('trong nước và quốc tế', 'domestic & international') },
-    { n: '10+', label: tx('Quốc gia', 'Countries'), note: tx('khách hàng từ châu Á, châu Âu, Bắc Mỹ', 'clients from Asia, Europe, North America & beyond') },
-    { n: '10+', label: tx('Lĩnh vực', 'Practice areas'), note: tx('hỗ trợ pháp lý toàn diện cho doanh nghiệp', 'full business legal support') },
-  ],
 
   about: {
     paragraphs: [

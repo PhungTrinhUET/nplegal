@@ -114,28 +114,27 @@ function Home({ c }: { c: Ctx }) {
   const fdi = site.areas.find((a) => a.id === 'fdi')!;
   return (
     <>
-      <section className="hero">
-        <div className="hero__in">
+      <section className="hero" aria-labelledby="hero-h">
+        <div className="wrap hero__in">
           <div className="hero__text">
-            <p className="eyebrow eyebrow--light">{L === 'vi' ? 'Công ty luật · Hà Nội' : 'Law firm · Hanoi'}</p>
-            <h1>{t(site.hero.title)}</h1>
-            <p className="hero__lead">{t(site.hero.lead)}</p>
+            <div className="hero__media">
+              {/* TODO: thay ảnh Hà Nội hoàng hôn (ảnh ngang, rộng ≥ 2400px) */}
+              <img src={asset(r, 'img/hero.jpg')} alt="" width={468} height={941} fetchPriority="high" />
+            </div>
+            <span className="hero__rule hero__rule--short" aria-hidden="true" />
+            <p className="eyebrow hero__eyebrow">{u.heroEyebrow}</p>
+            <h1 id="hero-h">{t(site.hero.title)}</h1>
+            <span className="hero__rule" aria-hidden="true" />
             <div className="hero__cta">
-              <a href={linkTo(r, home(L), 'contact')} className="btn btn--solid">{u.cta}</a>
-              <a href={`tel:${tel}`} className="hero__tel">{site.phone}</a>
+              <a href={linkTo(r, home(L), ids.contact)} className="btn btn--solid">{u.cta}</a>
+              <a href={linkTo(r, home(L), ids.practices)} className="hero__link">{u.practicesLink} <span aria-hidden="true">→</span></a>
             </div>
           </div>
-          <figure className="hero__media">
-            <img src={asset(r, 'img/hero.jpg')} alt="" width={468} height={941} fetchPriority="high" />
-          </figure>
-        </div>
-      </section>
-
-      <section className="stats" aria-label={L === 'vi' ? 'Số liệu' : 'Key figures'}>
-        <div className="wrap stats__in">
-          {site.stats.map((s, i) => (
-            <div key={i} className="stat"><strong>{s.n}</strong><span className="stat__label">{t(s.label)}</span><span className="stat__note">{t(s.note)}</span></div>
-          ))}
+          <ul className="hero__facts">
+            {site.hero.facts.map((f, i) => (
+              <li key={i}><span className="hero__label">{t(f.label)}</span><p>{t(f.text)}</p></li>
+            ))}
+          </ul>
         </div>
       </section>
 
