@@ -69,10 +69,7 @@ export const site = {
   },
 
   hero: {
-    title: tx(
-      'Đối tác pháp lý chiến lược cho nhà đầu tư nước ngoài và doanh nghiệp tại Việt Nam',
-      'Strategic Legal Partner for Foreign Investors and Businesses in Vietnam',
-    ),
+    title: tx('Tư vấn pháp lý cho nhà đầu tư nước ngoài tại Việt Nam', 'Legal counsel for foreign investors in Vietnam'),
     lead: tx(
       'Kết hợp chuyên môn pháp lý, kinh nghiệm tuân thủ và hiểu biết kinh doanh thực tế để đưa ra giải pháp hợp lý về thương mại và hiệu quả.',
       'We combine legal expertise, compliance experience and practical business knowledge to deliver solutions that are commercially sound and effective.',
@@ -392,6 +389,18 @@ export const site = {
     vbf: tx('Thành viên Liên đoàn Luật sư Việt Nam', 'Member, Vietnam Bar Federation'),
     hba: tx('Thành viên Đoàn Luật sư TP. Hà Nội', 'Member, Hanoi Bar Association'),
   } as Record<string, Tx>,
+
+  /**
+   * Ấn phẩm & cập nhật pháp luật. Danh sách trống → ẩn cả mục trên trang chủ và mục "Ấn phẩm" trên menu.
+   * Mẫu (bỏ comment và thay bằng bài thật; KHÔNG ghi số hiệu văn bản hay ngày ban hành chưa kiểm):
+   *   { date: '2026-11-01', area: 'fdi', title: tx('Nghị định mới về đầu tư nước ngoài: điểm cần lưu ý', 'New decree on foreign investment: key points'),
+   *     text: tx('Tóm tắt một câu.', 'One-sentence summary.'), href: '' },
+   *   { date: '2026-10-01', area: 'tax', title: tx('Thay đổi về thuế thu nhập doanh nghiệp: doanh nghiệp FDI cần chuẩn bị gì', 'Corporate income tax changes: what FDI companies should prepare'),
+   *     text: tx('Tóm tắt một câu.', 'One-sentence summary.'), href: '' },
+   *   { date: '2026-09-01', area: 'compliance', title: tx('Bảo vệ dữ liệu cá nhân: nghĩa vụ của doanh nghiệp có vốn nước ngoài', 'Personal data protection: obligations for foreign-invested companies'),
+   *     text: tx('Tóm tắt một câu.', 'One-sentence summary.'), href: '' },
+   */
+  publications: [] as { date: string; area: string; title: Tx; text: Tx; href: string }[],
 
   contact: {
     lead: tx('Chúng tôi sẵn sàng hỗ trợ doanh nghiệp của bạn bằng giải pháp pháp lý thực tế và hiệu quả.', 'We are ready to support your business with practical and effective legal solutions.'),

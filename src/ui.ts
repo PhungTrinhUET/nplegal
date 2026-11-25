@@ -2,7 +2,8 @@
 export const ui = {
   vi: {
     skip: 'Bỏ qua đến nội dung',
-    nav: { about: 'Giới thiệu', practices: 'Lĩnh vực', approach: 'Đầu tư nước ngoài', team: 'Đội ngũ', contact: 'Liên hệ' },
+    nav: { about: 'Giới thiệu', practices: 'Lĩnh vực', team: 'Đội ngũ', publications: 'Ấn phẩm', contact: 'Liên hệ' },
+    foot: { firm: 'Công ty', legal: 'Pháp lý', disclaimer: 'Miễn trừ trách nhiệm' },
     menu: 'Menu', close: 'Đóng', langLabel: 'Ngôn ngữ',
     cta: 'Đặt lịch tư vấn', call: 'Gọi', more: 'Xem chi tiết', home: 'Trang chủ',
     aboutEyebrow: 'Về NP Legal', aboutTitle: 'Đối tác pháp lý tin cậy, đồng hành dài hạn',
@@ -28,7 +29,8 @@ export const ui = {
   },
   en: {
     skip: 'Skip to content',
-    nav: { about: 'About', practices: 'Practices', approach: 'Market entry', team: 'Our team', contact: 'Contact' },
+    nav: { about: 'About', practices: 'Practices', team: 'People', publications: 'Insights', contact: 'Contact' },
+    foot: { firm: 'Firm', legal: 'Legal', disclaimer: 'Disclaimer' },
     menu: 'Menu', close: 'Close', langLabel: 'Language',
     cta: 'Book a consultation', call: 'Call', more: 'Learn more', home: 'Home',
     aboutEyebrow: 'About NP Legal', aboutTitle: 'A trusted legal partner for the long term',

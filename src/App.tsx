@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { site, type Area, type Lang, type Tx } from './site';
 import { ui, type UI } from './ui';
 import { asset, linkTo, type Route } from './routes';
@@ -9,30 +9,40 @@ const tel = site.phone.replace(/[^\d+]/g, '');
 type Ctx = { r: Route; L: Lang; t: (x: Tx) => string; u: UI };
 const home = (L: Lang): Route => ({ lang: L, page: 'home' });
 
+/** Các anchor trên trang chủ (giữ #approach cho link cũ dù không còn trên menu). */
+const ids = { about: 'about', practices: 'practices', approach: 'approach', team: 'doi-ngu', publications: 'publications', contact: 'contact' };
+const hasPubs = site.publications.length > 0;
+
 function Header({ c }: { c: Ctx }) {
   const { r, L, u } = c;
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    document.documentElement.classList.toggle('menu-open', open);
+    if (!open) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    addEventListener('keydown', esc);
+    return () => removeEventListener('keydown', esc);
+  }, [open]);
   const h = (id: string) => linkTo(r, home(L), id);
   const other: Lang = L === 'vi' ? 'en' : 'vi';
   const otherRoute: Route = r.page === 'home' ? home(other) : { ...r, lang: other };
   return (
     <header className="nav">
       <div className="nav__in">
-        <a href={linkTo(r, home(L))} className="brand" aria-label={`${site.name} – ${u.home}`}><Logo /><span className="brand__name">NP LEGAL</span></a>
-        <div className="nav__right">
-          <nav className="lang" aria-label={u.langLabel}>
-            <a href={linkTo(r, { ...otherRoute, lang: 'vi' })} hrefLang="vi" aria-current={L === 'vi' ? 'true' : undefined}>VI</a>
-            <a href={linkTo(r, { ...otherRoute, lang: 'en' })} hrefLang="en" aria-current={L === 'en' ? 'true' : undefined}>EN</a>
-          </nav>
-          <button className="nav__toggle" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>{open ? u.close : u.menu}</button>
-        </div>
-        <nav id="menu" className={`nav__links${open ? ' is-open' : ''}`} onClick={() => setOpen(false)}>
-          <a href={h('about')}>{u.nav.about}</a>
-          <a href={h('practices')}>{u.nav.practices}</a>
-          <a href={h('approach')}>{u.nav.approach}</a>
-          <a href={h('team')}>{u.nav.team}</a>
-          <a href={h('contact')} className="btn btn--solid btn--sm">{u.cta}</a>
+        <a href={linkTo(r, home(L))} className="brand" aria-label={`${site.name} – ${u.home}`}><Logo /><span className="brand__name">NP Legal</span></a>
+        <nav id="menu" className={`nav__links${open ? ' is-open' : ''}`} aria-label="Menu" onClick={(e) => { if ((e.target as HTMLElement).closest('a')) setOpen(false); }}>
+          <a href={h(ids.about)}>{u.nav.about}</a>
+          <a href={h(ids.practices)}>{u.nav.practices}</a>
+          <a href={h(ids.team)}>{u.nav.team}</a>
+          {hasPubs && <a href={h(ids.publications)}>{u.nav.publications}</a>}
+          <a href={h(ids.contact)}>{u.nav.contact}</a>
+          <a href={h(ids.contact)} className="btn btn--line nav__cta">{u.cta}</a>
         </nav>
+        <nav className="lang" aria-label={u.langLabel}>
+          <a href={linkTo(r, { ...otherRoute, lang: 'vi' })} hrefLang="vi" lang="vi" aria-current={L === 'vi' ? 'true' : undefined}>VI</a>
+          <a href={linkTo(r, { ...otherRoute, lang: 'en' })} hrefLang="en" lang="en" aria-current={L === 'en' ? 'true' : undefined}>EN</a>
+        </nav>
+        <button className="nav__toggle" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>{open ? u.close : u.menu}</button>
       </div>
     </header>
   );
@@ -148,7 +158,7 @@ function Home({ c }: { c: Ctx }) {
         </div>
       </section>
 
-      <section id="team" className="sec sec--tint">
+      <section id={ids.team} className="sec sec--tint">
         <div className="wrap">
           <SecHead eyebrow={u.teamEyebrow} title={u.teamTitle} lead={t(site.team.intro[0])} />
           <div className="team">
@@ -316,12 +326,16 @@ function ContactForm({ c }: { c: Ctx }) {
 
 function Footer({ c }: { c: Ctx }) {
   const { r, L, t, u } = c;
+  const h = (id: string) => linkTo(r, home(L), id);
+  const other: Lang = L === 'vi' ? 'en' : 'vi';
+  const otherRoute: Route = r.page === 'home' ? home(other) : { ...r, lang: other };
   return (
     <footer className="foot">
       <div className="wrap foot__in">
         <div className="foot__brand">
           <Logo />
-          <p>{t(site.hero.title)}</p>
+          <p>{t(site.hero.title)}.</p>
+          <p className="foot__addr">{t(site.address)}</p>
         </div>
         <div>
           <h2 className="foot__h">{u.nav.practices}</h2>
@@ -332,22 +346,48 @@ function Footer({ c }: { c: Ctx }) {
           </ul>
         </div>
         <div>
-          <h2 className="foot__h">{u.nav.contact}</h2>
+          <h2 className="foot__h">{u.foot.firm}</h2>
           <ul className="foot__list">
-            <li><a href={`tel:${tel}`}>{site.phone}</a></li>
-            <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-            <li>{t(site.address)}</li>
+            <li><a href={h(ids.about)}>{u.nav.about}</a></li>
+            <li><a href={h(ids.team)}>{u.nav.team}</a></li>
+            {hasPubs && <li><a href={h(ids.publications)}>{u.nav.publications}</a></li>}
+            <li><a href={h(ids.contact)}>{u.nav.contact}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 className="foot__h">{u.foot.legal}</h2>
+          <ul className="foot__list">
+            <li><a href="#disclaimer">{u.foot.disclaimer}</a></li>
           </ul>
         </div>
       </div>
       <div className="wrap foot__note">
         {t(site.legal.license) && <p>{t(site.legal.license)}</p>}
         {site.legal.taxCode && <p>{L === 'vi' ? 'Mã số thuế' : 'Tax code'}: {site.legal.taxCode}</p>}
-        <p>{u.disclaimer}</p>
-        <p>© {new Date().getFullYear()} {site.name}</p>
+        <p id="disclaimer">{u.disclaimer}</p>
+        <p className="foot__bottom">
+          <span>© {new Date().getFullYear()} {site.name}</span>
+          <span aria-hidden="true">·</span>
+          <a href={linkTo(r, { ...otherRoute, lang: 'vi' })} hrefLang="vi" lang="vi" aria-current={L === 'vi' ? 'true' : undefined}>VI</a>
+          <span aria-hidden="true">/</span>
+          <a href={linkTo(r, { ...otherRoute, lang: 'en' })} hrefLang="en" lang="en" aria-current={L === 'en' ? 'true' : undefined}>EN</a>
+        </p>
       </div>
     </footer>
   );
+}
+
+/** Nút gọi nổi (chỉ màn hình < 600px), ẩn khi mục Liên hệ đang trong khung nhìn. */
+function CallFab({ c }: { c: Ctx }) {
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const el = document.getElementById(ids.contact);
+    if (!el || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(([e]) => setHidden(e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <a href={`tel:${tel}`} className={`callfab${hidden ? ' is-hidden' : ''}`} aria-label={`${c.u.call} ${site.phone}`}>{c.u.callFab}</a>;
 }
 
 export default function App({ route }: { route: Route }) {
@@ -360,7 +400,7 @@ export default function App({ route }: { route: Route }) {
       <Header c={c} />
       <main id="main">{area?.detail ? <AreaPage c={c} a={area} /> : <Home c={c} />}</main>
       <Footer c={c} />
-      <a href={`tel:${tel}`} className="callfab" aria-label={`${c.u.call} ${site.phone}`}>{c.u.callFab}</a>
+      <CallFab c={c} />
     </>
   );
 }
